@@ -8,8 +8,8 @@ A custom HACS integration for Home Assistant that connects with [Join by Joaoapp
 
 ## Features
 
-- **UI Config Flow Setup**: Configure your Join API Key once via the Home Assistant UI without editing `configuration.yaml`.
-- **Auto-Discovery**: Automatically queries Join's registration API to create notification entities for all your registered devices (e.g., Pixel, Family Room, Living Room).
+- **UI Config Flow Setup**: Configure your Join API Key once via the Home Assistant UI without touching `configuration.yaml`.
+- **Auto-Discovery**: Automatically queries Join's registration API to create notification entities for all your registered devices (e.g., Pixel 10a, Shield TV, Basement, etc.).
 - **Group Notifications**: Automatically creates a "Join All" entity (`notify.join_all`) to push notifications to all devices in your account simultaneously.
 - **Modern Notification Service**: Fully supports Home Assistant's unified `notify.send_message` action syntax.
 
@@ -35,17 +35,31 @@ A custom HACS integration for Home Assistant that connects with [Join by Joaoapp
 4. Search for **Join by Joaoapps** (or **Join**).
 5. Paste your **API Key** and click **Submit**.
 
+![Join API Key Setup](./images/Screenshot%20From%202026-10-11%2020-25-45.png)
+
+6. Once submitted, the integration entry will be created under **Devices & Services**:
+
+![Join Integration Entry](./images/Screenshot%20From%202026-10-11%2020-27-23.png)
+
+---
+
+## Discovered Entities
+
+Upon setup, all registered Join devices under your account are automatically imported as notification entities:
+
+![Discovered Entities](./images/Screenshot%20From%202026-10-11%2020-28-00.png)
+
 ---
 
 ## Usage
 
-Once configured, your Join devices will appear as notification entities. You can trigger them using the standard `notify.send_message` action in automations, scripts, or Developer Tools.
+Once configured, your Join devices will appear as `notify` entities. You can trigger them using the standard `notify.send_message` action in automations, scripts, or Developer Tools.
 
 ### Example: Target a Specific Device via UI Action
 
 In **Developer Tools > Actions**:
 - **Action**: `Send a notification message` (`notify.send_message`)
-- **Target**: Select `notify.join_pixel` or `notify.join_family_room`
+- **Target**: Select `notify.join_pixel_10a` or `notify.join_shieldtv_bedroom`
 - **Title**: `Front Door`
 - **Message**: `Front door motion detected!`
 
@@ -65,7 +79,7 @@ trigger:
 action:
   - action: notify.send_message
     target:
-      entity_id: notify.join_me
+      entity_id: notify.join_pixel_10a
     data:
       title: "{{ state_attr('lock.front_front_door', 'friendly_name') or 'Front Door Lock' }}"
       message: >-
