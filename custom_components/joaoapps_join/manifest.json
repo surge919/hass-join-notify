@@ -1,10 +1,12 @@
 {
   "domain": "joaoapps_join",
   "name": "Join by Joaoapps",
-  "codeowners": ["@surge919"],
+  "codeowners": [
+    "@surge919"
+  ],
   "config_flow": true,
   "documentation": "https://github.com/surge919/hass-join-notify",
   "iot_class": "cloud_push",
   "issue_tracker": "https://github.com/surge919/hass-join-notify/issues",
-  "version": "1.0.0"
+  "version": "20261011-2136"
 }
