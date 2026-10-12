@@ -8,10 +8,10 @@ A custom HACS integration for Home Assistant that connects with [Join by Joaoapp
 
 ## Features
 
-- **UI Config Flow Setup**: Configure your Join API Key once via the Home Assistant UI without touching `configuration.yaml`.
-- **Auto-Discovery**: Automatically queries Join's registration API to create notification entities for all your registered devices (e.g., Pixel, Living Room, etc.).
+- **UI Config Flow Setup**: Configure your Join API Key once via the Home Assistant UI without editing `configuration.yaml`.
+- **Auto-Discovery**: Automatically queries Join's registration API to create notification entities for all your registered devices (e.g., Pixel, Family Room, Living Room).
 - **Group Notifications**: Automatically creates a "Join All" entity (`notify.join_all`) to push notifications to all devices in your account simultaneously.
-- **Modern Notification Service**: Supports Home Assistant's unified `notify.send_message` action.
+- **Modern Notification Service**: Fully supports Home Assistant's unified `notify.send_message` action syntax.
 
 ---
 
@@ -39,7 +39,7 @@ A custom HACS integration for Home Assistant that connects with [Join by Joaoapp
 
 ## Usage
 
-Once configured, your Join devices will appear as `notify` entities. You can trigger them using the standard `notify.send_message` action in automations, scripts, or Developer Tools.
+Once configured, your Join devices will appear as notification entities. You can trigger them using the standard `notify.send_message` action in automations, scripts, or Developer Tools.
 
 ### Example: Target a Specific Device via UI Action
 
@@ -52,15 +52,27 @@ In **Developer Tools > Actions**:
 ### Example: Target in YAML Automations
 
 ```yaml
-alias: Send Join Notification on Motion
+alias: Send Join Notification on Door State Change
 trigger:
-  - platform: state
-    entity_id: binary_sensor.front_door_motion
-    to: "on"
+  - trigger: state
+    entity_id: lock.front_front_door
+    to: locked
+    id: locked
+  - trigger: state
+    entity_id: lock.front_front_door
+    to: unlocked
+    id: unlocked
 action:
   - action: notify.send_message
     target:
-      entity_id: notify.join_pixel
+      entity_id: notify.join_me
     data:
-      title: "Security Alert"
-      message: "Motion detected at the front door."
+      title: "{{ state_attr('lock.front_front_door', 'friendly_name') or 'Front Door Lock' }}"
+      message: >-
+        {% if trigger is defined %}
+          {{ 'Locked' if trigger.id == 'locked' else 'Unlocked' }} by {{
+          state_attr('lock.front_front_door', 'changed_by') or 'unknown' }}.
+        {% else %}
+          Manual test trigger.
+        {% endif %}
+        Battery {{ states('sensor.front_front_door_battery_level') }}%
