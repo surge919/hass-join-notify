@@ -1,0 +1,11 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Join by Joaoapps",
+        "description": "Enter your Join API key from the Join web portal.",
+        "data": { "api_key": "API Key" }
+      }
+    }
+  }
+}

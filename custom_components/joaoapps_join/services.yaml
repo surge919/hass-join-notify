@@ -1,0 +1,93 @@
+ring:
+  name: Ring
+  description: Make a Join device ring so you can find it.
+  fields:
+    device_id:
+      name: Device ID
+      description: Join device ID. Defaults to all devices (group.all).
+      example: "group.all"
+      selector:
+        text:
+
+send_sms:
+  name: Send SMS
+  description: Send an SMS from a Join phone. Specify the phone's device ID.
+  fields:
+    device_id:
+      name: Device ID
+      description: Join device ID of the phone that should send the SMS.
+      example: "your-phone-device-id"
+      selector:
+        text:
+    number:
+      name: Number
+      required: true
+      example: "5553334444"
+      selector:
+        text:
+    message:
+      name: Message
+      required: true
+      example: "Hello!"
+      selector:
+        text:
+
+send_tasker:
+  name: Send Tasker command
+  description: Send a command to Tasker on a Join device.
+  fields:
+    device_id:
+      name: Device ID
+      selector:
+        text:
+    command:
+      name: Command
+      required: true
+      example: "test"
+      selector:
+        text:
+
+send_url:
+  name: Send URL
+  description: Open a URL on a Join device.
+  fields:
+    device_id:
+      name: Device ID
+      selector:
+        text:
+    url:
+      name: URL
+      required: true
+      example: "http://google.com"
+      selector:
+        text:
+
+send_wallpaper:
+  name: Send wallpaper
+  description: Set a Join device's wallpaper from an image URL.
+  fields:
+    device_id:
+      name: Device ID
+      selector:
+        text:
+    url:
+      name: URL
+      required: true
+      example: "http://www.planwallpaper.com/static/images/ZhGEqAP.jpg"
+      selector:
+        text:
+
+send_file:
+  name: Send file
+  description: Send a file to a Join device from a URL.
+  fields:
+    device_id:
+      name: Device ID
+      selector:
+        text:
+    url:
+      name: URL
+      required: true
+      example: "http://download.thinkbroadband.com/5MB.zip"
+      selector:
+        text:
